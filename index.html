@@ -17,26 +17,36 @@
             console.log(`Your Play: ${humansPlay}`);
             console.log(winner);
             if (winner === "Invalid Input!"){
-                return;
+                i--;
+                alert("Invalid Input!"); 
             }
             if (winner === "You Win!"){
                 score++;
+                alert(`You Won! Score: ${score}/5`);
             }
             if (winner === "You Lose!"){
                 bot++;
+                alert(`You lost! Bot Score: ${bot}/5`);
+            }
+            if (winner === "Draw!"){
+                alert(`It's a Draw round!!`);
             }
             if (score == 3){
-                return console.log("You beat the bot in a 5 game round!")
+                alert("You beat the bot in a 5 game round!");
+                return console.log("You beat the bot in a 5 game round!");
             }
             if (bot == 3){
-                return console.log("You lost to the bot in a 5 game round!")
+                alert("You lost to the bot in a 5 game round!");
+                return console.log("You lost to the bot in a 5 game round!");
             }
         }
         if (bot == score){
-            return console.log("It's a draw!")
+            alert("The 5 round duel ended in a draw!");
+            return console.log("It's a draw!");
         }
         else{
-            return console.log("You lost to the bot in a 5 game round!")
+            alert("You lost to the bot in a 5 game round!");
+            return console.log("You lost to the bot in a 5 game round!");
         }
     }
 
