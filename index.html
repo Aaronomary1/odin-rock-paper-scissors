@@ -5,30 +5,39 @@
 
     
     function game() {
+        let score = 0;
+        let bot = 0;
         for (let i = 0; i < 5; i++){
-            console.log(`Round ${i + 1}!`)
+            console.log(`Round ${i + 1}! Score: ${score}`)
             let computersPlay = computerPlay();
+            console.log(computersPlay);
             let humansPlay = prompt("Rock, Paper, or Scissors?");
-            let winner = console.log(rockPaperScissors(computersPlay, humansPlay));
-            let score = 0;
-            let draw = 0;
+            let winner = rockPaperScissors(computersPlay, humansPlay);
+            console.log(`Computers Play: ${computersPlay}`);
+            console.log(`Your Play: ${humansPlay}`);
+            console.log(winner);
             if (winner === "Invalid Input!"){
-                i = 0;
+                return;
+            }
+            if (winner === "You Win!"){
+                score++;
             }
             if (winner === "You Lose!"){
-                score++
+                bot++;
             }
-            if (winner === "Draw!"){
-                draw++
-            }
-            else if (score == 3){
+            if (score == 3){
                 return console.log("You beat the bot in a 5 game round!")
             }
-            else if (draw == 5){
-                return console.log("It's a draw!")
+            if (bot == 3){
+                return console.log("You lost to the bot in a 5 game round!")
             }
         }
-        return console.log("You lost to the bot in a 5 game round!")
+        if (bot == score){
+            return console.log("It's a draw!")
+        }
+        else{
+            return console.log("You lost to the bot in a 5 game round!")
+        }
     }
 
     function computerPlay () {
@@ -37,9 +46,10 @@
         return randomoption;
     }
     function rockPaperScissors (computer, human){
-
+        if (human == null){
+            return "Invalid Input!";
+        }
         human = human.toLowerCase();
-        console.log(human);
         let options = ["rock", "paper", "scissors"];
         if (!options.includes(human)){
             return "Invalid Input!";
