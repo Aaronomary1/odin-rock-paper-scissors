@@ -1,101 +1,139 @@
-<script>
-
-
-    game()
-
-    
-    function game() {
-        let score = 0;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="styles.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RPS - Odin/AaronO</title>
+    <script>
+        let round = 0;
         let bot = 0;
-        for (let i = 0; i < 5; i++){
-            console.log(`Round ${i + 1}! Score: ${score}`)
-            let computersPlay = computerPlay();
-            console.log(computersPlay);
-            let humansPlay = prompt("Rock, Paper, or Scissors?");
-            let winner = rockPaperScissors(computersPlay, humansPlay);
-            console.log(`Computers Play: ${computersPlay}`);
-            console.log(`Your Play: ${humansPlay}`);
-            console.log(winner);
-            if (winner === "Invalid Input!"){
-                i--;
-                alert("Invalid Input!"); 
-            }
-            if (winner === "You Win!"){
-                score++;
-                alert(`You Won! Score: ${score}/5`);
-            }
-            if (winner === "You Lose!"){
-                bot++;
-                alert(`You lost! Bot Score: ${bot}/5`);
-            }
-            if (winner === "Draw!"){
-                alert(`It's a Draw round!!`);
-            }
-            if (score == 3){
-                alert("You beat the bot in a 5 game round!");
-                return console.log("You beat the bot in a 5 game round!");
-            }
-            if (bot == 3){
-                alert("You lost to the bot in a 5 game round!");
-                return console.log("You lost to the bot in a 5 game round!");
-            }
-        }
-        if (bot == score){
-            alert("The 5 round duel ended in a draw!");
-            return console.log("It's a draw!");
-        }
-        else{
-            alert("You lost to the bot in a 5 game round!");
-            return console.log("You lost to the bot in a 5 game round!");
-        }
-    }
+        let human = 0;
+        game()
+        function game() {
+            
+            window.addEventListener('click', RespondMouseClick);
+            
+            function RespondMouseClick(e) {
+                
+                humansPlay = e.target.id;
+                let computersPlay = computerPlay();
+                let winner = rockPaperScissors(computersPlay, humansPlay);
+                console.log(`Computers Play: ${computersPlay}`);
+                console.log(`Your Play: ${humansPlay}`);
+                console.log(winner);
+                const content = document.createElement('div');
+                const results = document.createElement('div');
+                const currentscore = document.getElementById('score')
+                
+                if (winner === "Invalid Input!"){
+                    content.textContent = `Computers Play: ${computersPlay}, Your Play ${humansPlay}, Result: Invalid Input!`;
+                    round--;
+                }
+                if (winner === "You Win!"){
+                    content.textContent = `Computers Play: ${computersPlay}, Your Play ${humansPlay}, Result: You Win!`;
+                    human++;
+                    
+                }
+                if (winner === "You Lose!"){
+                    content.textContent = `Computers Play: ${computersPlay}, Your Play ${humansPlay}, Result: You Lose!`;
+                    bot++;
+                }
+                if (winner === "Draw!"){
+                    content.textContent = `Computers Play: ${computersPlay}, Your Play ${humansPlay}, Result: Draw!`;
+                    human++;
+                    bot++;
+                }
+                console.log(human, bot)
+                round++;
+                container.appendChild(content);
+                if (round == 5){
+                    window.removeEventListener('click', RespondMouseClick);
+                    if (human > bot){
+                        results.textContent = "You beat the bot in a 5 game match! Congrats!";
+                    }
+                    if (human < bot){
+                        results.textContent = "You lost to the bot in a 5 game match! Sorry!";
+                    }
+                    if (human == bot){
+                        results.textContent = "The game ended in a tie";
+                    }
+                    container.appendChild(results);
 
-    function computerPlay () {
-        let options = ["rock", "paper", "scissors"];
-        let randomoption = options[Math.floor(Math.random() * options.length)];
-        return randomoption;
-    }
-    function rockPaperScissors (computer, human){
-        if (human == null){
-            return "Invalid Input!";
+                    }
+                
+                    currentscore.innerText = `Human: ${human} Bot: ${bot}`
+            };
+            
         }
-        human = human.toLowerCase();
-        let options = ["rock", "paper", "scissors"];
-        if (!options.includes(human)){
-            return "Invalid Input!";
+
+        function computerPlay () {
+            let options = ["rock", "paper", "scissors"];
+            let randomoption = options[Math.floor(Math.random() * options.length)];
+            return randomoption;
         }
-        if (computer === "rock"){
-            if (human === "scissors"){
-                return "You Lose!"
+        function rockPaperScissors (computer, human){
+            if (human == null){
+                return "Invalid Input!";
             }
-            else if (human === "paper"){
-                return "You Win!"
+            human = human.toLowerCase();
+            let options = ["rock", "paper", "scissors"];
+            if (!options.includes(human)){
+                return "Invalid Input!";
             }
-            else {
-                return "Draw!"
+            if (computer === "rock"){
+                if (human === "scissors"){
+                    return "You Lose!"
+                }
+                else if (human === "paper"){
+                    return "You Win!"
+                }
+                else {
+                    return "Draw!"
+                }
+            }
+            else if (computer === "paper"){
+                if (human === "rock"){
+                    return "You Lose!"
+                }
+                else if (human === "scissors"){
+                    return "You Win!"
+                }
+                else {
+                    return "Draw!"
+                }
+            }
+            else if (computer === "scissors"){
+                if (human === "paper"){
+                    return "You Lose!"
+                }
+                else if (human === "rock"){
+                    return "You Win!"
+                }
+                else {
+                    return "Draw!"
+                }
             }
         }
-        else if (computer === "paper"){
-            if (human === "rock"){
-                return "You Lose!"
-            }
-            else if (human === "scissors"){
-                return "You Win!"
-            }
-            else {
-                return "Draw!"
-            }
-        }
-        else if (computer === "scissors"){
-            if (human === "paper"){
-                return "You Lose!"
-            }
-            else if (human === "rock"){
-                return "You Win!"
-            }
-            else {
-                return "Draw!"
-            }
-        }
-    }
-</script>
+    </script>
+</head>
+<body>
+    <div class="main-container">
+        <div class="choices">
+            <img class="click" id="rock" src="rock.png" width="200">
+            <p id="rocktext"></p>
+            <img class="click" id="paper" src="paper.png" width="200">
+            <img class="click" id="scissors" src="scissors.png" width="200">
+            
+        </div>
+        <h1 id="score" style="text-align: center;">
+            Human: 0 Bot: 0
+        </h1>
+        <div id="container" style="text-align: center;">
+
+        </div>
+    </div>
+</body>
+</html>
+
